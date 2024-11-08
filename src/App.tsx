@@ -1,5 +1,15 @@
+import Header from "./components/Header.tsx";
+import Quiz from "./components/Quiz.tsx";
+
 function App() {
-  return <div>App</div>;
+  return (
+    <>
+      <Header />
+      <main>
+        <Quiz />
+      </main>
+    </>
+  );
 }
 
 export default App;
