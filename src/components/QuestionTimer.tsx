@@ -9,19 +9,20 @@ const QuestionTimer: React.FC<Props> = ({ timeout, onTimeout }) => {
   const [timeRemaining, setTimeRemaining] = useState(timeout);
 
   useEffect(() => {
-    console.log("SETTING TIMEOUT");
-    setTimeout(onTimeout, timeout);
+    const timeoutId = setTimeout(onTimeout, timeout);
 
     // cleaner
+    return () => clearTimeout(timeoutId);
   }, [onTimeout, timeout]);
 
   useEffect(() => {
-    console.log("SETTING TIME INTERVAL");
     const timeIntervalId = setInterval(() => {
       setTimeRemaining((prevTimeRemaining) => prevTimeRemaining - 100);
     }, 100);
 
-    // return () => clearInterval(timeIntervalId);
+    // Clean up: we have to clean up an interval if it runs again...
+    // By cleaning old interval, will have one interval up and running at the same time.
+    return () => clearInterval(timeIntervalId);
   }, []);
 
   return <progress id="question-time" value={timeRemaining} max={timeout} />;
