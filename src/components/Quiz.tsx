@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import QUESTIONS from "../questions.ts";
-import quizComplete from "../assets/quiz-complete.png";
 import Question from "./Question.tsx";
+import Summary from "./Summary.tsx";
 
 /**
  * useRef - utilize to mange value of the state which will not change if component function si executed aging.
@@ -9,28 +9,21 @@ import Question from "./Question.tsx";
  */
 
 const Quiz: React.FC = () => {
-  const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
+  const [userAnswers, setUserAnswers] = useState<string[]>([]);
 
   const activeQuestionIndex = userAnswers.length;
   const isQuizFinished = activeQuestionIndex === QUESTIONS.length;
 
-  const handleSelectAnswer = useCallback((selectedAnswer: string | null) => {
+  const handleSelectAnswer = useCallback((selectedAnswer: string) => {
     setUserAnswers((prevAnswers) => [...prevAnswers, selectedAnswer]);
   }, []);
 
   const handleSkipAnswer = useCallback(
-    () => handleSelectAnswer(null),
+    () => handleSelectAnswer(""),
     [handleSelectAnswer],
   );
 
-  if (isQuizFinished) {
-    return (
-      <div id="summary">
-        <img src={quizComplete} alt="Trophy icon" />
-        <h2>Quiz Complete</h2>
-      </div>
-    );
-  }
+  if (isQuizFinished) return <Summary userAnswers={userAnswers} />;
 
   return (
     <div id="quiz">

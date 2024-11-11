@@ -5,7 +5,7 @@ type Props = {
   answers: string[];
   selectedAnswer: string | null;
   answerState: TValueOf<typeof TAnswerState>;
-  onSelect: (selectedAnswer: string | null) => void;
+  onSelect: (selectedAnswer: string) => void;
 };
 
 const Answers: React.FC<Props> = ({
@@ -28,7 +28,7 @@ const Answers: React.FC<Props> = ({
     <ul id="answers">
       {answers.map((answer) => {
         let cssClass = "";
-        //                                     last element
+
         const isSelected = selectedAnswer === answer;
 
         if (answerState === "answered" && isSelected) {

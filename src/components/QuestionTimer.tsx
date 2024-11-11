@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { TAnswerState } from "../types";
 
 type Props = {
-  onTimeout: () => void;
+  onTimeout: (() => void) | null;
   timeout: number;
+  mode: TAnswerState;
 };
 
-const QuestionTimer: React.FC<Props> = ({ timeout, onTimeout }) => {
+const QuestionTimer: React.FC<Props> = ({ timeout, onTimeout, mode }) => {
   const [timeRemaining, setTimeRemaining] = useState(timeout);
 
   useEffect(() => {
+    if (!onTimeout) return;
+
     const timeoutId = setTimeout(onTimeout, timeout);
 
     // cleaner
@@ -25,7 +29,14 @@ const QuestionTimer: React.FC<Props> = ({ timeout, onTimeout }) => {
     return () => clearInterval(timeIntervalId);
   }, []);
 
-  return <progress id="question-time" value={timeRemaining} max={timeout} />;
+  return (
+    <progress
+      id="question-time"
+      value={timeRemaining}
+      max={timeout}
+      className={mode}
+    />
+  );
 };
 
 export default QuestionTimer;

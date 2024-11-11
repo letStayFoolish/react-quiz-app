@@ -12,13 +12,13 @@ import QUESTIONS from "../questions.ts";
  */
 
 type Props = {
-  onSelectAnswer: (selectedAnswer: string | null) => void;
+  onSelectAnswer: (selectedAnswer: string) => void;
   onSkipAnswer: () => void;
   index: number;
 };
 
 type TAnswer = {
-  selectedAnswer: string | null;
+  selectedAnswer: string;
   isCorrect: boolean | null;
 };
 
@@ -28,7 +28,17 @@ const Question: React.FC<Props> = ({ onSelectAnswer, onSkipAnswer, index }) => {
     isCorrect: null,
   });
 
-  const handleSelectAnswer = (answer: string | null) => {
+  let timer = 3000; //ms
+
+  if (answer.selectedAnswer) {
+    timer = 1000; //ms
+  }
+
+  if (answer.isCorrect !== null) {
+    timer = 2000; //ms
+  }
+
+  const handleSelectAnswer = (answer: string) => {
     setAnswer({
       selectedAnswer: answer,
       isCorrect: null, // don't know yet
@@ -56,7 +66,12 @@ const Question: React.FC<Props> = ({ onSelectAnswer, onSkipAnswer, index }) => {
 
   return (
     <div id="qiestion">
-      <QuestionTimer timeout={10000} onTimeout={onSkipAnswer} />
+      <QuestionTimer
+        key={timer}
+        timeout={timer}
+        onTimeout={answer.selectedAnswer === "" ? onSkipAnswer : null} // trigger this function no answers is selected
+        mode={answerState}
+      />
       <h2>{QUESTIONS[index].text}</h2>
       <Answers
         answers={QUESTIONS[index].answers}
