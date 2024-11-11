@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import QUESTIONS from "../questions.ts";
 import quizComplete from "../assets/quiz-complete.png";
-type Props = {};
+import QuestionTimer from "./QuestionTimer.tsx";
 
 const Quiz: React.FC = () => {
-  const [userAnswers, setUserAnswers] = useState<string[]>([]);
+  const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
 
   const activeQuestionIndex = userAnswers.length;
-
   const isQuizFinished = activeQuestionIndex === QUESTIONS.length;
 
-  const handleSelectAnswer = (selectedAnswer: string) => {
+  const handleSelectAnswer = (selectedAnswer: string | null) => {
     if (isQuizFinished) return;
     setUserAnswers((prevAnswers) => [...prevAnswers, selectedAnswer]);
   };
@@ -32,6 +31,10 @@ const Quiz: React.FC = () => {
   return (
     <div id="quiz">
       <div id="qiestion">
+        <QuestionTimer
+          timeout={10000}
+          onTimeout={() => handleSelectAnswer(null)}
+        />
         <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
         <ul id="answers">
           {shuffledAnswers.map((answer) => (

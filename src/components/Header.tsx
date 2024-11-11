@@ -1,8 +1,6 @@
 import React from "react";
 import headerImage from "../assets/quiz-logo.png";
 
-type Props = {};
-
 const Header: React.FC = () => {
   return (
     <header>
