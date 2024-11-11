@@ -12,3 +12,5 @@ export const TAnswerState = {
 } as const;
 
 export type TValueOf<T> = T[keyof T];
+
+export type TAnswerState = TValueOf<typeof TAnswerState>;

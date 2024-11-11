@@ -44,7 +44,11 @@ const Answers: React.FC<Props> = ({
 
         return (
           <li className="answer" key={answer}>
-            <button className={cssClass} onClick={() => onSelect(answer)}>
+            <button
+              className={cssClass}
+              onClick={() => onSelect(answer)}
+              disabled={answerState !== ""}
+            >
               {answer}
             </button>
           </li>
