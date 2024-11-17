@@ -8,7 +8,7 @@ import QUESTIONS from "../questions.ts";
  * key={}
  * Using `key` prop on components, which aren't part of the list,
  * is useful in situations, whenever this prop changes React will destroy old instance of the component and create the new one!
- * Basically, React will do unmount/re-mount it.
+ * Basically, React will do unmount/re-mount it. => Forcing Component to re-execute again
  */
 
 type Props = {
